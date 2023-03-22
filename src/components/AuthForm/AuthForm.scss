@@ -1,15 +1,18 @@
-$iconHeight: 80px;
+$iconHeight: 110px;
+$iconMarginTop: -($iconHeight - 30px); 
 
 .auth-form {
-  width: 360px;
-  padding: 30px;
+  width: 670px;
+  margin: 60px 0;
+  padding: 30px 72px;
+  font-size: 22px;
   box-shadow: 0px 0px 3px #b8b7b7;
   border-radius: 10px;
   background-color: #ffffff;
 
   &__icon {
     height: $iconHeight;
-    margin: -$iconHeight auto 16px;
+    margin: $iconMarginTop auto 24px;
 
     img {
       max-height: 100%;
@@ -25,13 +28,14 @@ $iconHeight: 80px;
   }
 
   &__button {
-    min-width: 120px;
+    min-width: 290px;
     margin: 8px 0;
-    padding: 12px 16px;
+    padding: 30px 24px;
+    font-size: inherit;
     color: #ffffff;
     background-color: #fc632b;
     border: 0;
-    border-radius: 4px;
+    border-radius: 8px;
     cursor: pointer;
 
     &:disabled {

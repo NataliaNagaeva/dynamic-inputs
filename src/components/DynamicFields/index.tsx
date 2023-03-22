@@ -54,7 +54,7 @@ const DynamicFields = ({fieldsData, onFieldsInput}: DynamicFieldsProps) => {
 
     setFieldsValues(defaultValues);
     setFieldsErrors(defaultErrors);
-  }, []);
+  }, [fieldsData]);
 
   useEffect(() => {
     onFieldsInput(fieldsValues, fieldsErrors);
@@ -78,7 +78,7 @@ const DynamicFields = ({fieldsData, onFieldsInput}: DynamicFieldsProps) => {
         type={DynamicFieldType[fieldData.type]}
         valid={fieldsErrors[fieldData.id] && fieldsErrors[fieldData.id].length === 0}
         value={fieldsValues[fieldData.id]}
-        onInput={onFieldInputHandle}
+        onChange={onFieldInputHandle}
       />
     )}
   </>

@@ -13,7 +13,7 @@ interface InputProps {
   required?: boolean;
   valid?: boolean;
   value?: string;
-  onInput?: FormEventHandler<HTMLInputElement>
+  onChange?: FormEventHandler<HTMLInputElement>
 }
 
 const Input = ({ 
@@ -25,7 +25,7 @@ const Input = ({
   placeholder='', 
   required = false, 
   valid = true,  
-  onInput }: InputProps) => {
+  onChange }: InputProps) => {
   const inputRef = useRef<HTMLInputElement>(null);
   const [classes, setClasses] = useState(generateInputClasses(valid, className));
 
@@ -34,9 +34,9 @@ const Input = ({
   }, [valid, className]);
 
   
-  const handleOnInput = (event: FormEvent<HTMLInputElement>) => {
-    if (onInput !== undefined && typeof onInput === 'function') {
-      onInput(event);
+  const handleOnChange = (event: FormEvent<HTMLInputElement>) => {
+    if (onChange !== undefined && typeof onChange === 'function') {
+      onChange(event);
     } 
   }
 
@@ -49,7 +49,7 @@ const Input = ({
       required={required}
       type={type} 
       value={value}
-      onInput={handleOnInput}
+      onChange={handleOnChange}
     />
     {clearable && value !== '' && <div className="input-clear" onClick={() => {
       if(inputRef !== null) {
