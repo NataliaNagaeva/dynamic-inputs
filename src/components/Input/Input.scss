@@ -1,0 +1,29 @@
+.input-wrapper {
+  position: relative;
+}
+
+.input {
+  width: 100%;
+  max-width: 100%;
+  margin: 8px 0;
+  padding: 12px 16px;
+  outline: none;
+  background-color: #ffffff;
+  border: 1px solid #f87878;
+  border-radius: 4px;
+
+  &--invalid {
+    box-shadow: 0 0 6px #ee5353;
+  }
+}
+
+.input-clear {
+  position: absolute;
+  top: 50%;
+  right: 16px;
+  left: auto;
+  width: 24px;
+  height: 24px;
+  transform: translateY(-50%);
+  cursor: pointer;
+}

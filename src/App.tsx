@@ -1,24 +1,41 @@
-import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+import AuthForm from './components/AuthForm';
+import { DynamicField } from './components/DynamicFields';
+import './App.scss';
 
-function App() {
+const config: DynamicField[] = [
+  {
+    id: 'first_name',
+    type: 'inputText',
+    label: 'First Name',
+    defaultValue: 'Some first name',
+    placeholder: 'Введите имя'
+  },
+ {
+    id:  'last_name',
+    type: 'inputText',
+    label: 'Last Name',
+    placeholder: 'Введите фамилию'
+  },
+  {
+    id: 'email',
+    type: 'inputEmail',
+    label: 'Email',
+    required: true,
+    placeholder: 'someemail@example.com'
+  },
+  {
+    id: 'password',
+    type: 'inputPassword',
+    label: 'Password',
+    required: true,
+    placeholder: 'Введите пароль'
+  },
+];
+
+const App = () => {
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+    <div className="app">
+      <AuthForm config={config} />
     </div>
   );
 }
