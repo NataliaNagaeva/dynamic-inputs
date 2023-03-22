@@ -1,3 +1,4 @@
+import { useState } from 'react';
 import AuthForm from './components/AuthForm';
 import { DynamicField } from './components/DynamicFields';
 import './App.scss';
@@ -33,9 +34,15 @@ const config: DynamicField[] = [
 ];
 
 const App = () => {
+  const [isAuth, setIsAuth] = useState(false);
+
+  const onSuccessAuth = () => {
+    setIsAuth(true);
+  }
+
   return (
     <div className="app">
-      <AuthForm config={config} />
+      { !isAuth ? <AuthForm config={config} onSuccessAuth={onSuccessAuth} /> : "You are signed in!" }
     </div>
   );
 }

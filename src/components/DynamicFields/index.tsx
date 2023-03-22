@@ -1,6 +1,5 @@
 import { FormEvent, useEffect, useState } from "react";
 import Input from "../Input";
-import isEmailValid from "../../utils/isEmailValid";
 
 enum DynamicFieldType {
   inputText = 'text',
@@ -8,8 +7,7 @@ enum DynamicFieldType {
   inputPassword = 'password'
 }
 
-type DynamicFieldTypeKeys = keyof typeof DynamicFieldType;
-type DynamicFieldTypeValues = typeof DynamicFieldType[DynamicFieldTypeKeys];
+export type DynamicFieldTypeKeys = keyof typeof DynamicFieldType;
 
 export interface DynamicField {
   id: string;
@@ -28,44 +26,41 @@ type DynamicFieldsErrors = Record<DynamicFieldId, DynamicFieldErrors>;
 
 interface DynamicFieldsProps {
   fieldsData: DynamicField[];
-  onFieldsInput: (fieldsValues: DynamicFieldsValues, fieldsErrors: DynamicFieldsErrors) => void
+  fieldsErrors: DynamicFieldsErrors;
+  onFieldsChange: (fieldsValues: DynamicFieldsValues) => void;
 }
 
-const DynamicFields = ({fieldsData, onFieldsInput}: DynamicFieldsProps) => {
+const DynamicFields = ({ 
+  fieldsData, 
+  fieldsErrors, 
+  onFieldsChange
+}: DynamicFieldsProps) => {
   const [fieldsValues, setFieldsValues] = useState<DynamicFieldsValues>({});
-  const [fieldsErrors, setFieldsErrors] = useState<DynamicFieldsErrors>({});
 
   useEffect(() => {
     const defaultValues: DynamicFieldsValues = {};
-    const defaultErrors: DynamicFieldsErrors = {};
 
     fieldsData.forEach(fieldData => {
       let resultValue: DynamicFieldValue = '';
-      let resultErrors: DynamicFieldErrors = [];
 
       if(fieldData.defaultValue) {
         resultValue = fieldData.defaultValue;
-        resultErrors = getFieldErrors(fieldData.defaultValue, DynamicFieldType[fieldData.type], !!fieldData.required);
       } 
 
       defaultValues[fieldData.id] = resultValue;
-      defaultErrors[fieldData.id] = resultErrors;
     });
 
     setFieldsValues(defaultValues);
-    setFieldsErrors(defaultErrors);
   }, [fieldsData]);
 
   useEffect(() => {
-    onFieldsInput(fieldsValues, fieldsErrors);
-  }, [fieldsValues, fieldsErrors]);
+    onFieldsChange(fieldsValues);
+  }, [onFieldsChange, fieldsValues]);
 
   const onFieldInputHandle = (event: FormEvent<HTMLInputElement>) => {
-    const { currentTarget: { name, value, type, required } } = event;
-    const filedErrors = getFieldErrors(value, type as DynamicFieldTypeValues, required);
+    const { currentTarget: { name, value } } = event;
 
     setFieldsValues(prevValues => ({ ...prevValues, [name]: value }));
-    setFieldsErrors(prevErrors => ({ ...prevErrors, [name]: filedErrors }))
   }
 
   return <>
@@ -82,20 +77,6 @@ const DynamicFields = ({fieldsData, onFieldsInput}: DynamicFieldsProps) => {
       />
     )}
   </>
-}
-
-const getFieldErrors = (fieldValue: DynamicFieldValue, fieldType: DynamicFieldTypeValues, required: boolean) => {
-  const errors: string[] = [];
-
-  if(required && fieldValue === '') {
-    errors.push('The field is required');
-  }
-  
-  if(fieldType === 'email' && !isEmailValid(fieldValue)) {
-    errors.push('Invalid email');
-  }
-
-  return errors;
 }
 
 export default DynamicFields;
