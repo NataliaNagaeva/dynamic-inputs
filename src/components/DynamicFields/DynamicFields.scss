@@ -1,0 +1,23 @@
+@use '../../styles/functions';
+@use '../../styles/variables';
+
+.dynamic-field {
+  display: block;
+  text-align: left;
+
+  &--required {
+    .dynamic-field__label {
+      &::after {
+        content: '*';
+        color: variables.$alarm-color;
+      }
+    }
+  }
+
+  &__label {
+    display: inline-flex;
+    margin-top: functions.rem-calc(16px);
+    font-size: functions.rem-calc(20px);
+    line-height: 1;
+  }
+}

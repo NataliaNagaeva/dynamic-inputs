@@ -9,13 +9,12 @@ const config: DynamicField[] = [
     type: 'inputText',
     label: 'First Name',
     defaultValue: 'Some first name',
-    placeholder: 'Введите имя'
+    placeholder: 'Enter the name'
   },
  {
     id:  'last_name',
     type: 'inputText',
-    label: 'Last Name',
-    placeholder: 'Введите фамилию'
+    label: 'Last Name'
   },
   {
     id: 'email',
@@ -29,7 +28,7 @@ const config: DynamicField[] = [
     type: 'inputPassword',
     label: 'Password',
     required: true,
-    placeholder: 'Введите пароль'
+    placeholder: 'Enter the password'
   },
 ];
 

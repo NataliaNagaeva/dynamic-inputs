@@ -1,4 +1,5 @@
-import { FormEvent, FormEventHandler, MouseEventHandler, useEffect, useRef, useState } from "react";
+import { FormEvent, FormEventHandler, MouseEventHandler, useRef } from "react";
+import generateClasses from "../../utils/generateClasses";
 import triggerNativeEventFor from "../../utils/triggerNativeEventFor";
 import './Input.scss';
 
@@ -16,6 +17,8 @@ interface InputProps {
   onChange?: FormEventHandler<HTMLInputElement>
 }
 
+const inputClasses = generateClasses('input');
+
 const Input = ({ 
   name, 
   type, 
@@ -25,14 +28,9 @@ const Input = ({
   placeholder='', 
   required = false, 
   valid = true,  
-  onChange }: InputProps) => {
+  onChange 
+}: InputProps) => {
   const inputRef = useRef<HTMLInputElement>(null);
-  const [classes, setClasses] = useState(generateInputClasses(valid, className));
-
-  useEffect(() => {
-    setClasses(generateInputClasses(valid, className));
-  }, [valid, className]);
-
   
   const handleOnChange = (event: FormEvent<HTMLInputElement>) => {
     if (onChange !== undefined && typeof onChange === 'function') {
@@ -49,7 +47,7 @@ const Input = ({
   return <div className="input-wrapper">
     <input     
       ref={inputRef} 
-      className={classes}
+      className={inputClasses('', { invalid: !valid }, className)}
       name={name} 
       placeholder={placeholder} 
       required={required}
@@ -75,19 +73,5 @@ const InputClear = ({ onClick }: { onClick: MouseEventHandler<HTMLDivElement> })
     </svg>    
   </div>
 );
-
-const generateInputClasses = (isValid: boolean, additionalClassName: string) => {
-  const classes = ['input'];
-
-  if(!isValid) {
-    classes.push('input--invalid');
-  }
-
-  if(additionalClassName) {
-    classes.push(additionalClassName);
-  }
-
-  return classes.join(' ');
-}
 
 export default Input;

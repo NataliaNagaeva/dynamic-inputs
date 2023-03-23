@@ -47,23 +47,14 @@ const getInvalidFields = (formErrors: FormFieldsErros) =>
   Object.entries(formErrors).filter(([_, fieldErrors]) => fieldErrors.length > 0);
 
 const AuthForm = ({ config, onSuccessAuth }: AuthFormProps) => {
-  const [isSubmited, setIsSubmited] = useState(false);
   const [formData, setFormData] = useState<FormFieldsValues>({});
   const [formErrors, setFormErrors] = useState<FormFieldsErros>({});
 
   useEffect(() => {
-    // set errors after the first submit
-    if(isSubmited) {
-      setFormErrors(getFormErrors(config, formData));
-    }
-  }, [formData, config, isSubmited]);
+    setFormErrors(getFormErrors(config, formData));
+  }, [formData, config]);
 
-  const isFormValid = () => {
-    const errors = getFormErrors(config, formData);
-    setFormErrors(errors);
-
-    return getInvalidFields(errors).length === 0;
-  }
+  const isFormValid = () => getInvalidFields(formErrors).length === 0
 
   const handleFieldsChange = (fieldsValues: FormFieldsValues) => {
     setFormData(fieldsValues);
@@ -71,8 +62,7 @@ const AuthForm = ({ config, onSuccessAuth }: AuthFormProps) => {
 
   const handleFormSubmit = (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault();
-    setIsSubmited(true);
-
+    
     if(isFormValid()) {
       onSuccessAuth();
     }
@@ -90,7 +80,7 @@ const AuthForm = ({ config, onSuccessAuth }: AuthFormProps) => {
     <button
       className="auth-form__button"
       type="submit"
-      disabled={getInvalidFields(formErrors).length !== 0}
+      disabled={!isFormValid()}
     >
       Sign In
     </button>

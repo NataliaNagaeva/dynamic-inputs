@@ -1,3 +1,6 @@
+@use '../../styles/functions';
+@use '../../styles/variables';
+
 .input-wrapper {
   position: relative;
 }
@@ -5,38 +8,47 @@
 .input {
   width: 100%;
   max-width: 100%;
-  margin: 16px 0;
-  padding: 32px 38px;
+  margin: functions.rem-calc(16px 0);
+  padding: functions.rem-calc(32px 38px);
   font-size: inherit;
   color: inherit;
   outline: none;
   background-color: #ffffff;
-  border: 1px solid #f87878;
-  border-radius: 8px;
+  border: 1px solid variables.$border-color;
+  border-radius: variables.$border-radius;
+
+  &::placeholder {
+    color: variables.$second-color;
+  }
 
   &--invalid {
-    box-shadow: 0 0 6px #ee5353;
+    box-shadow: 0 0 6px variables.$alarm-color;
   }
 }
 
 .input-clear {
   position: absolute;
   top: 50%;
-  right: 16px;
+  right: functions.rem-calc(16px);
   left: auto;
-  width: 24px;
-  height: 24px;
+  width: functions.rem-calc(24px);
+  height: functions.rem-calc(24px);
   display: inline-block;
   font-style: normal;
   line-height: 0;
   text-align: center;
   text-transform: none;
-  color: inherit;
+  color: variables.$second-color;
   vertical-align: -0.125em;
   text-rendering: optimizeLegibility;
   -webkit-font-smoothing: antialiased;
   transform: translateY(-50%);
-  cursor: pointer;  
+  transition: color 0.2s;
+  cursor: pointer;
+
+  &:hover {
+    color: variables.$main-color;
+  }
 
   svg {
     display: inline-block;

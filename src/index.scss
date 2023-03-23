@@ -1,3 +1,5 @@
+@use './styles/functions';
+
 * {
   box-sizing: border-box;
 }
@@ -17,6 +19,5 @@ code {
 }
 
 h2 {
-  color: #000000;
-  margin: 8px 0;
+  margin: functions.rem-calc(8px 0);
 }
